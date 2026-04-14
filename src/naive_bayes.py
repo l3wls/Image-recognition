@@ -19,4 +19,25 @@ class NaiveBayes:
 
 
     def predict(self, X):
+        y_pred = [self._predict(x) for x in X]
+        return np.array(y_pred)
+    
+    def _predict(self, x):
+        posteriors = []
 
+        # calculate posterior probability for each class
+        for index, c in enumerate(self._classes):
+            prior = np.log(self._priors[index])
+            posterior = np.sum(np.log(self._pdf(index, x)))
+            posterior = posterior + prior
+            posteriors.append(posterior)
+        
+        # return class with highest posterior probability
+        return self._classes[np.argmax(posteriors)]
+    
+    def _pdf(self, class_index, x):
+        mean = self._mean[class_index]
+        var = self._var[class_index]
+        numerator = np.exp(- (x - mean) ** 2 / (2 * var))
+        denominator = np.sqrt(2 * np.pi * var)
+        return numerator / denominator
