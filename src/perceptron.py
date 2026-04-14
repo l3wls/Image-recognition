@@ -8,4 +8,21 @@ class Perceptron:
        self.weights = None
        self.bias = None
 
-    
+    def fit(self, X, y):
+        n_samples, n_features = X.shape
+        
+        # init parameters
+        self.weights = np.zeros(n_features)
+        self.bias = 0
+
+        y_ = np.where(y > 0, 1, 0)
+
+        for _ in range(self.n_iters):
+            for index, x_i in enumerate(X):
+                linear_output = np.dot(x_i, self.weights) + self.bias
+                y_predicted = self.activation_func(linear_output)
+
+                # Perceptron update weights and bias
+                update = self.lr * (y_[index] - y_predicted)
+                self.weights += update * x_i
+                self.bias += update
