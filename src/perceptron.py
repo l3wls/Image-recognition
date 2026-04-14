@@ -26,3 +26,8 @@ class Perceptron:
                 update = self.lr * (y_[index] - y_predicted)
                 self.weights += update * x_i
                 self.bias += update
+
+    def predict(self, X):
+        linear_output = np.dot(X, self.weights) + self.bias
+        y_predicted = self.activation_func(linear_output)
+        return y_predicted
