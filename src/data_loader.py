@@ -53,3 +53,24 @@ def load_digit_validation():
         f"Digit validation: {len(images)} images but {len(labels)} labels"
     )
     return images, labels
+
+def load_face_training():
+    images_path = os.path.join(DATA_DIR, 'facedata', 'facedatatrain')
+    labels_path = os.path.join(DATA_DIR, 'facedata', 'facedatatrainlabels')
+    images = _parse_images(images_path, FACE_ROWS, FACE_COLS)
+    labels = _parse_labels(labels_path)
+    assert len(images) == len(labels), (
+        f"Face train: {len(images)} images but {len(labels)} labels"
+    )
+    return images, labels
+
+
+def load_face_validation():
+    images_path = os.path.join(DATA_DIR, 'facedata', 'facedatavalidation')
+    labels_path = os.path.join(DATA_DIR, 'facedata', 'facedatavalidationlabels')
+    images = _parse_images(images_path, FACE_ROWS, FACE_COLS)
+    labels = _parse_labels(labels_path)
+    assert len(images) == len(labels), (
+        f"Face validation: {len(images)} images but {len(labels)} labels"
+    )
+    return images, labels
