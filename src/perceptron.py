@@ -2,32 +2,34 @@ import numpy as np
 
 class Perceptron:
     def __init__(self, learning_rate=0.01, n_iters=1000):
-       self.lr = learning_rate
-       self.n_iters = n_iters
-       self.activation_func = self._unit_step_func
-       self.weights = None
-       self.bias = None
+        self.lr = learning_rate
+        self.n_iters = n_iters
+        self.weights = None
+        self.bias = None
+        self._classes = None
 
     def fit(self, X, y):
         n_samples, n_features = X.shape
-        
-        # init parameters
-        self.weights = np.zeros(n_features)
-        self.bias = 0
+        self._classes = np.unique(y)
+        n_classes = len(self._classes)
 
-        y_ = np.where(y > 0, 1, 0)
+        self.weights = np.zeros((n_classes, n_features))
+        self.bias = np.zeros(n_classes)
 
-        for _ in range(self.n_iters):
-            for index, x_i in enumerate(X):
-                linear_output = np.dot(x_i, self.weights) + self.bias
-                y_predicted = self.activation_func(linear_output)
+        for i, c in enumerate(self._classes):
+            # One-vs-All: current class is +1, all others are -1
+            y_binary = np.where(y == c, 1, 0)
 
-                # Perceptron update weights and bias
-                update = self.lr * (y_[index] - y_predicted)
-                self.weights += update * x_i
-                self.bias += update
+            for _ in range(self.n_iters):
+                for index, x_i in enumerate(X):
+                    y_predicted = np.dot(x_i, self.weights[i]) + self.bias[i]
+                    y_predicted = 1 if y_predicted >= 0 else 0
+
+                    update = self.lr * (y_binary[index] - y_predicted)
+                    self.weights[i] += update * x_i
+                    self.bias[i] += update
 
     def predict(self, X):
-        linear_output = np.dot(X, self.weights) + self.bias
-        y_predicted = self.activation_func(linear_output)
-        return y_predicted
+        # Score each class and pick the highest
+        scores = np.dot(X, self.weights.T) + self.bias
+        return self._classes[np.argmax(scores, axis=1)]
