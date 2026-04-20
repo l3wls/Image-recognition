@@ -23,7 +23,7 @@ class NaiveBayes:
 
         for index, c in enumerate(self._classes):
             prior = np.log(self._priors[index])
-            p = self._feature_probs[index]
+            p = np.clip(self._feature_probs[index], 1e-10, 1 - 1e-10)
             # log-likelihood for Bernoulli features
             likelihood = np.sum(x * np.log(p) + (1 - x) * np.log(1 - p))
             posteriors.append(prior + likelihood)

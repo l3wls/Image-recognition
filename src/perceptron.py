@@ -1,7 +1,7 @@
 import numpy as np
 
 class Perceptron:
-    def __init__(self, learning_rate=0.01, n_iters=1000):
+    def __init__(self, learning_rate=0.01, n_iters=100):
         self.lr = learning_rate
         self.n_iters = n_iters
         self.weights = None
@@ -9,7 +9,7 @@ class Perceptron:
         self._classes = None
 
     def fit(self, X, y):
-        n_samples, n_features = X.shape
+        n_features = X.shape[1]
         self._classes = np.unique(y)
         n_classes = len(self._classes)
 
