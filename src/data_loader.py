@@ -74,3 +74,24 @@ def load_face_validation():
         f"Face validation: {len(images)} images but {len(labels)} labels"
     )
     return images, labels
+
+def load_digit_test():
+    images_path = os.path.join(DATA_DIR, 'digitdata', 'testimages')
+    labels_path = os.path.join(DATA_DIR, 'digitdata', 'testlabels')
+    images = _parse_images(images_path, DIGIT_ROWS, DIGIT_COLS)
+    labels = _parse_labels(labels_path)
+    assert len(images) == len(labels), (
+        f"Digit test: {len(images)} images but {len(labels)} labels"
+    )
+    return images, labels
+
+
+def load_face_test():
+    images_path = os.path.join(DATA_DIR, 'facedata', 'facedatatest')
+    labels_path = os.path.join(DATA_DIR, 'facedata', 'facedatatestlabels')
+    images = _parse_images(images_path, FACE_ROWS, FACE_COLS)
+    labels = _parse_labels(labels_path)
+    assert len(images) == len(labels), (
+        f"Face test: {len(images)} images but {len(labels)} labels"
+    )
+    return images, labels
