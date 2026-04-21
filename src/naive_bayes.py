@@ -21,7 +21,7 @@ class NaiveBayes:
     def _predict(self, x):
         posteriors = []
 
-        for index, c in enumerate(self._classes):
+        for index, _ in enumerate(self._classes):
             prior = np.log(self._priors[index])
             p = np.clip(self._feature_probs[index], 1e-10, 1 - 1e-10)
             # log-likelihood for Bernoulli features
