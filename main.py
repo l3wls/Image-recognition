@@ -7,7 +7,7 @@ experiments = [
     ("faces", "perceptron"),
 ]
 
-for feature_type in ("grid",):
+for feature_type in ("pixel","grid"):
     for dataset, algorithm in experiments:
         print(f"\n{'='*56}")
         print(f"  {dataset.upper()} | {algorithm.upper()} | {feature_type.upper()} FEATURES")
