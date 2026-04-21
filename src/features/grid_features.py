@@ -12,11 +12,15 @@ def extract_grid_features(image, grid_rows=8, grid_cols=8):
             col_start = c * img_cols // grid_cols
             col_end = (c + 1) * img_cols // grid_cols
 
-            found = any(
-                image[row][col] != ' '
-                for row in range(row_start, row_end)
-                for col in range(col_start, col_end)
-            )
-            features[r * grid_cols + c] = 1 if found else 0
+            count = 0
+            total = (row_end - row_start) * (col_end - col_start)
+
+            for row in range(row_start, row_end):
+                for col in range(col_start, col_end):
+                    if image[row][col] != ' ':
+                        count += 1
+
+            # Density instead of binary
+            features[r * grid_cols + c] = count / total if total > 0 else 0
 
     return features
