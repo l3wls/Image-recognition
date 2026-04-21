@@ -16,7 +16,7 @@ class Perceptron:
         self.weights = np.zeros((n_classes, n_features))
         self.bias = np.zeros(n_classes)
 
-        for i, c in enumerate(self._classes):
+        for i, _ in enumerate(self._classes):
             # One-vs-All: current class is +1, all others are -1
             y_binary = np.where(y == c, 1, 0)
 

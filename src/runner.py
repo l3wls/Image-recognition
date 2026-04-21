@@ -4,7 +4,6 @@ import time
 
 from src.data_loader import load_digit_training, load_digit_test, load_face_training, load_face_test
 from src.features.pixel_features import extract_pixel_features
-from src.features.counting_features import extract_counting_features
 from src.features.grid_features import extract_grid_features
 from src.naive_bayes import NaiveBayes
 from src.perceptron import Perceptron
@@ -23,8 +22,6 @@ def run_experiment(dataset, algorithm, feature_type, n_trials=5):
         extractor = extract_pixel_features
     elif feature_type == "grid":
         extractor = extract_grid_features
-    else:
-        extractor = extract_counting_features
 
     all_train_features = np.array([extractor(img) for img in train_images])
     all_train_labels = np.array(train_labels)

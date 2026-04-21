@@ -1,6 +1,6 @@
 import numpy as np
 
-def extract_grid_features(image, grid_rows=4, grid_cols=4):
+def extract_grid_features(image, grid_rows=8, grid_cols=8):
     img_rows = len(image)
     img_cols = len(image[0]) if img_rows > 0 else 0
     features = np.zeros(grid_rows * grid_cols, dtype=np.float64)
