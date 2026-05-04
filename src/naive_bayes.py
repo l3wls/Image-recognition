@@ -3,17 +3,17 @@ import numpy as np
 class NaiveBayes:
     def fit(self, X, y, alpha=1):
         # X: feature matrix (numeric data from your feature extraction)
-        # y: labels (correct classes)
+        # y: labels 
         # alpha: smoothing to avoid zero probabilities
 
         # We need number of samples and features
-        n_samples, n_features = X.shape
+        n_samples, n_features = X.shape 
 
-        #  we are trying to predict
+        #  this method is when we are trying to predict
         self._classes = np.unique(y)
         n_classes = len(self._classes)
 
-        # Store how common each class is (prior probabilities)
+        # Store how common each class is ( prior probabilities)
         self._priors = np.zeros(n_classes, dtype=np.float64)
 
         # Store probability of each feature being 1 for each class
