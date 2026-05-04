@@ -44,7 +44,7 @@ def run_experiment(dataset, algorithm, feature_type, n_trials=5):
     test_features = np.array([extractor(img) for img in test_images])
     test_labels_arr = np.array(test_labels)
 
-    # ----------- EXPERIMENT SETTINGS -----------
+   
 
     # Different percentages of training data to test performance
     percentages = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]

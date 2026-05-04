@@ -2,14 +2,14 @@ import numpy as np
 
 class NaiveBayes:
     def fit(self, X, y, alpha=1):
-        # X: feature matrix (numeric data from your feature extraction)
+        # X: feature matrix numeric data from feature extraction
         # y: labels 
-        # alpha: smoothing to avoid zero probabilities
+        # alpha: smoothing in order to to avoid zero probabilities
 
-        # We need number of samples and features
+        #  number of samples and features
         n_samples, n_features = X.shape 
 
-        #  this method is when we are trying to predict
+        #  this method for trying to predict
         self._classes = np.unique(y)
         n_classes = len(self._classes)
 
@@ -25,13 +25,13 @@ class NaiveBayes:
             # Get only samples belonging to this class
             X_c = X[y == c]
 
-            #  we need class probability
-            # How often this class appears in dataset
+            #  need class probability
+           
             self._priors[index] = X_c.shape[0] / float(n_samples)
 
             #  FEATURE PROBABILITY
-            # We calculate how often each feature = 1 for this class
-            # +alpha prevents probability from becoming 0 (smoothing)
+            # calculate how often each feature = 1 for this class
+            # +alpha prevents probability from becoming 0 
             self._feature_probs[index, :] = (
                 X_c.sum(axis=0) + alpha
             ) / (X_c.shape[0] + 2 * alpha)
@@ -41,7 +41,7 @@ class NaiveBayes:
         return np.array([self._predict(x) for x in X])
 
     def _predict(self, x):
-        # Predict for ONE sample
+        # Predict for onee sample
         posteriors = []
 
         # Loop through each class
@@ -52,12 +52,12 @@ class NaiveBayes:
             prior = np.log(self._priors[index])
 
            
-            # Clip values so we don’t take log(0)
+            # Clip probabilities to avoid log(0) and make sure to have numerical stability
             p = np.clip(self._feature_probs[index], 1e-10, 1 - 1e-10)
 
             
-            # If feature = 1 → use log(p)
-            # If feature = 0 → use log(1 - p)
+            # If feature = 1  use log(p)
+            # If feature = 0  use log(1 - p)
             likelihood = np.sum(
                 x * np.log(p) + (1 - x) * np.log(1 - p)
             )
